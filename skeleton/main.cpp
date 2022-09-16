@@ -10,6 +10,7 @@
 
 #include <iostream>
 
+#include "Particle.h"
 
 
 using namespace physx;
@@ -29,6 +30,7 @@ PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 
+Particle* myParticle;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -53,7 +55,9 @@ void initPhysics(bool interactive)
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
-	}
+
+	myParticle = new Particle({0,0,0}, { 1,0,0 });
+}
 
 
 // Function to configure what happens in each step of physics
@@ -65,6 +69,8 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
+
+	myParticle->integrate(t);
 }
 
 // Function to clean data
@@ -122,6 +128,5 @@ int main(int, const char*const*)
 		stepPhysics(false);
 	cleanupPhysics(false);
 #endif
-
 	return 0;
 }
