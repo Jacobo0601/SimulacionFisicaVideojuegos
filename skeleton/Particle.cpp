@@ -17,7 +17,7 @@ Particle::~Particle()
 void Particle::integrate(double t) //Update
 {
 	tr = physx::PxTransform(tr.p.x + vel.x * t, tr.p.y + vel.y * t, tr.p.z + vel.z * t);
-	//tr.p += vel * t;
+	tr.p += vel * t;
 	vel += acc * t;
 	vel *= powf(damping, t);
 }

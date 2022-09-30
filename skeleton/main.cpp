@@ -11,6 +11,7 @@
 #include <iostream>
 
 #include "Particle.h"
+#include "Proyectil.h"
 
 
 using namespace physx;
@@ -56,7 +57,7 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-	myParticle = new Particle({0,0,0}, { 8,0,0 }, { 0,0,0 }, 1.0f);
+	Proyectil* newPro = new Proyectil(Proyectil::ARTILLERY, { 0, 0, 0 }, {8,0,0});
 }
 
 
@@ -70,7 +71,7 @@ void stepPhysics(bool interactive, double t)
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 
-	myParticle->integrate(t);
+	//myParticle->integrate(t);
 }
 
 // Function to clean data
